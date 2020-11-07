@@ -1,0 +1,19 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+        - ./assets/asset.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_DB=netgate
+      - POSTGRES_USER=punit
+      - POSTGRES_PASSWORD=netgate
+  web:
+    build: .
+    command: ./bin/main
+    ports:
+      - "9090:9090"
+    depends_on:
+      - db
+
